@@ -14,4 +14,4 @@ function FilterBar({ filter, setFilter }) {
     );
   }
   
-  export default FilterBar; 
+  export default FilterBar;

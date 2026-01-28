@@ -16,6 +16,6 @@ function TaskCard({ task, onToggle, onDelete }) {
         </div>
       </div>
     );
-  } 
+  }
   
   export default TaskCard;

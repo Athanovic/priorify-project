@@ -6,7 +6,7 @@ function TaskForm({ onAdd }) {
 
   function handleSubmit(e) {
     e.preventDefault();
- 
+
     if (!title) return;
 
     onAdd({
