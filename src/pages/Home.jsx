@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { CheckSquare, Zap, Filter, Search } from "lucide-react";
 import FeatureCard from "../components/FeatureCard";
 
-const Home = () => {
+function Home() {
   return (
     <div className="max-w-6xl mx-auto px-8 py-12">
       {/* Hero Section */}
@@ -78,9 +78,6 @@ const Home = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Home;
-
-
-

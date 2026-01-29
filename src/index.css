@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --primary: #5b5fef;
   --bg: #f4f6fb;
@@ -6,126 +10,14 @@
 
 body {
   margin: 0;
-  font-family: Inter, sans-serif;
-  background: var(--bg);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-.app {
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
+.dark {
+  background-color: #1a202c;
+  color: #f7fafc;
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.header h1 {
-  color: var(--primary);
-}
-
-.task-form {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.task-form input,
-.task-form select,
-.task-form button {
-  padding: 10px;
-}
-
-.task-card {
-  background: var(--card);
-  padding: 15px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  border-left: 6px solid var(--primary);
-}
-
-.task-card.done {
-  opacity: 0.6;
-  text-decoration: line-through;
-}
-
-.priority.high { color: #e63946; }
-.priority.medium { color: #f4a261; }
-.priority.low { color: #2a9d8f; }
-
-
-body {
-  margin: 0;
-  font-family: Inter, sans-serif;
-  background: #f6f7fb;
-}
-
-.app {
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.task-form {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.task-form input,
-.task-form select,
-.task-form button {
-  padding: 10px;
-}
-
-.task-card {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.task-card.done {
-  opacity: 0.6;
-  text-decoration: line-through;
-}
-
-.priority.high { color: #e63946; }
-.priority.medium { color: #f4a261; }
-.priority.low { color: #2a9d8f; }
-
-.actions button {
-  margin-left: 5px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  background: #eef0ff;
-  transition: background 0.2s ease, transform 0.1s ease;
-}
-
-.actions button:hover {
-  background: var(--primary);
-  color: white;
-}
-
-.actions button:active {
-  transform: scale(0.97);
-}
-
-.actions button:focus {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
+.dark body {
+  background-color: #1a202c;
 }

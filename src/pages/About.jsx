@@ -1,8 +1,8 @@
 import { CheckSquare, Target, Users, Lightbulb } from "lucide-react";
 
-export function About() {
+function About() {
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto px-6 py-10">
       {/* Header */}
       <div className="text-center mb-12">
         <CheckSquare className="w-16 h-16 text-blue-600 mx-auto mb-4" />
@@ -104,4 +104,5 @@ function ValueCard({ icon, title, description }) {
     </div>
   );
 }
+
 export default About;

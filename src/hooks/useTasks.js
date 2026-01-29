@@ -7,6 +7,7 @@ function useTasks() {
     const [lastNotifiedDate, setLastNotifiedDate] = useLocalStorage("lastDueNotification", null);
 
     const {notify} = useNotifications();
+    
     //Notify for due tasks
     useEffect(() => {
         const today = new Date().toISOString().split("T")[0];
@@ -22,22 +23,36 @@ function useTasks() {
             setLastNotifiedDate(today);
         }
     }, [tasks, lastNotifiedDate, notify, setLastNotifiedDate]);
+    
     //Add task
     const addTask = (task) => {
-        setTasks([... tasks, task]);
-        notify("Task added successfully")
+        setTasks([...tasks, task]);
+        notify("Task added successfully");
     };
+    
     //Update task
-    const updateTask = (updatedTask) => {
+    const updateTask = (id, updatedData) => {
         setTasks(
-            tasks.map((task) => task.id === updatedTask.id? updatedTask:task)
+            tasks.map((task) => 
+                task.id === id ? { ...task, ...updatedData } : task
+            )
         );
-        notify("Task updated")
+        notify("Task updated");
     };
+    
     //Delete task
-    const deleteTask=(id) => {
+    const deleteTask = (id) => {
         setTasks(tasks.filter((task) => task.id !== id));
         notify("Task deleted");
+    };
+    
+    //Toggle task completion
+    const toggleComplete = (id) => {
+        setTasks(
+            tasks.map((task) =>
+                task.id === id ? { ...task, completed: !task.completed } : task
+            )
+        );
     };
 
     return {
@@ -45,6 +60,7 @@ function useTasks() {
         addTask,
         updateTask,
         deleteTask,
+        toggleComplete,
     };
 }
 

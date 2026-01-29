@@ -1,11 +1,21 @@
 import { useState, useEffect } from "react";
-import { Settings as SettingsIcon, Trash2, Download, Upload, Moon, Sun, Bell } from "lucide-react";
+import {
+  Settings as SettingsIcon,
+  Trash2,
+  Download,
+  Upload,
+  Moon,
+  Sun,
+  Bell,
+} from "lucide-react";
 
-export function Settings() {
+function Settings() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
   );
+
   const [notificationsEnabled, setNotificationsEnabled] = useState(
     localStorage.getItem("notifications") !== "off"
   );
@@ -26,6 +36,7 @@ export function Settings() {
     const newValue = !notificationsEnabled;
     setNotificationsEnabled(newValue);
     localStorage.setItem("notifications", newValue ? "on" : "off");
+
     alert(
       newValue
         ? "Task notifications enabled"
@@ -49,6 +60,7 @@ export function Settings() {
 
     const dataStr =
       "data:text/json;charset=utf-8," + encodeURIComponent(tasks);
+
     const downloadAnchor = document.createElement("a");
     downloadAnchor.href = dataStr;
     downloadAnchor.download = "priorify-tasks.json";
@@ -74,7 +86,7 @@ export function Settings() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto text-gray-900 dark:text-gray-100">
+    <div className="max-w-3xl mx-auto px-6 py-10 text-gray-900 dark:text-gray-100">
       {/* HEADER */}
       <div className="flex items-center gap-3 mb-8">
         <SettingsIcon className="w-10 h-10" />
@@ -174,4 +186,5 @@ export function Settings() {
     </div>
   );
 }
+
 export default Settings;

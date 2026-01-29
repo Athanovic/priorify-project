@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { useTasks } from "../hooks/useTasks"; 
 import { Link } from "react-router-dom";
+import useTasks from "../hooks/useTasks";
 import StatCard from "../components/StatCard";
 
 import {
@@ -24,24 +24,24 @@ import {
   ListTodo,
 } from "lucide-react";
 
-export function Dashboard() {
+function Dashboard() {
   const { tasks } = useTasks();
 
   const stats = useMemo(() => {
     const total = tasks.length;
-    const completed = tasks.filter((t) => t.completed).length;
+    const completed = tasks.filter(t => t.completed).length;
     const pending = total - completed;
 
     const highPriority = tasks.filter(
-      (t) => t.priority === "high" && !t.completed
+      t => t.priority === "High" && !t.completed
     ).length;
 
     const mediumPriority = tasks.filter(
-      (t) => t.priority === "medium" && !t.completed
+      t => t.priority === "Medium" && !t.completed
     ).length;
 
     const lowPriority = tasks.filter(
-      (t) => t.priority === "low" && !t.completed
+      t => t.priority === "Low" && !t.completed
     ).length;
 
     const completionRate =
@@ -73,14 +73,14 @@ export function Dashboard() {
     return [...tasks]
       .sort(
         (a, b) =>
-          new Date(b.updatedAt).getTime() -
-          new Date(a.updatedAt).getTime()
+          new Date(b.updatedAt || b.id).getTime() -
+          new Date(a.updatedAt || a.id).getTime()
       )
       .slice(0, 5);
   }, [tasks]);
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto px-6 py-10">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-2">Dashboard</h1>
@@ -182,14 +182,14 @@ export function Dashboard() {
 
         {recentTasks.length > 0 ? (
           <div className="space-y-3">
-            {recentTasks.map((task) => (
+            {recentTasks.map(task => (
               <div
                 key={task.id}
                 className="flex justify-between items-center p-4 border rounded-lg"
               >
                 <p
                   className={`font-medium ${
-                    task.completed ? "line-through" : ""
+                    task.completed ? "line-through text-gray-500" : ""
                   }`}
                 >
                   {task.title}
@@ -222,4 +222,3 @@ export function Dashboard() {
 }
 
 export default Dashboard;
-

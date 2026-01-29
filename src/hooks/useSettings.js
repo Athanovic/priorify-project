@@ -1,29 +1,32 @@
 import useLocalStorage from "./useLocalStorage";
 
 function useSettings() {
-    const [theme, setTheme] = useLocalStorage("theme", "light");
-    const [notificationsEnabled, setNotificationsEnabled] = useLocalStorage("notificationsEnabled", true);
-    
-    const toggleTheme = () => {
-        setTheme(theme === "light"? "dark": "light");
-    };
+  const [theme, setTheme] = useLocalStorage("theme", "light");
+  const [notificationsEnabled, setNotificationsEnabled] = useLocalStorage(
+    "notificationsEnabled",
+    true
+  );
 
-    const toggleNotifications = () => {
-        setNotificationsEnabled(!notificationsEnabled);
-    };
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
-    const resetApp = () => {
-        localStorage.clear();
-        window.location.reload();
-    };
+  const toggleNotifications = () => {
+    setNotificationsEnabled(!notificationsEnabled);
+  };
 
-    return {
-        theme,
-        notificationsEnabled,
-        toggleTheme,
-        toggleNotifications,
-        resetApp,
-    };
+  const resetApp = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
+  return {
+    theme,
+    notificationsEnabled,
+    toggleTheme,
+    toggleNotifications,
+    resetApp,
+  };
 }
 
 export default useSettings;

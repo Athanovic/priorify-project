@@ -1,10 +1,10 @@
 import { useState, useMemo } from "react";
-import { useTasks } from "../hooks/useTasks"; 
-import { TaskForm } from "../components/TaskForm";
-import { TaskCard } from "../components/TaskCard";
+import useTasks from "../hooks/useTasks";
+import TaskForm from "../components/TaskForm";
+import TaskCard from "../components/TaskCard";
 import { Plus, Search, Filter } from "lucide-react";
 
-export function Tasks() {
+const Tasks = () => {
   const {
     tasks,
     addTask,
@@ -19,7 +19,7 @@ export function Tasks() {
   const [priorityFilter, setPriorityFilter] = useState("all");
   const [showCompleted, setShowCompleted] = useState(true);
 
-  // Filter and search tasks
+  /* ---------------- FILTER + SEARCH ---------------- */
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
       if (!showCompleted && task.completed) return false;
@@ -39,20 +39,16 @@ export function Tasks() {
     });
   }, [tasks, searchQuery, priorityFilter, showCompleted]);
 
+  /* ---------------- HANDLERS ---------------- */
   const handleAddTask = (formData) => {
     addTask(formData);
     setShowForm(false);
   };
 
   const handleUpdateTask = (formData) => {
-    if (editingTask) {
-      updateTask(editingTask.id, formData);
-      setEditingTask(null);
-    }
-  };
-
-  const handleEditTask = (task) => {
-    setEditingTask(task);
+    if (!editingTask) return;
+    updateTask(editingTask.id, formData);
+    setEditingTask(null);
   };
 
   const handleDeleteTask = (id) => {
@@ -61,7 +57,7 @@ export function Tasks() {
     }
   };
 
-  // Statistics
+  /* ---------------- STATS ---------------- */
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter((t) => t.completed).length;
   const highPriorityTasks = tasks.filter(
@@ -70,7 +66,7 @@ export function Tasks() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      {/* Header */}
+      {/* HEADER */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Tasks</h1>
@@ -89,10 +85,10 @@ export function Tasks() {
         </button>
       </div>
 
-      {/* Filters */}
+      {/* FILTERS */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-6">
         <div className="grid md:grid-cols-3 gap-4">
-          {/* Search */}
+          {/* SEARCH */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               <Search className="w-4 h-4 inline mr-1" />
@@ -107,7 +103,7 @@ export function Tasks() {
             />
           </div>
 
-          {/* Priority Filter */}
+          {/* PRIORITY FILTER */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               <Filter className="w-4 h-4 inline mr-1" />
@@ -125,7 +121,7 @@ export function Tasks() {
             </select>
           </div>
 
-          {/* Show Completed */}
+          {/* SHOW COMPLETED */}
           <div className="flex items-end">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -141,7 +137,7 @@ export function Tasks() {
         </div>
       </div>
 
-      {/* Task List */}
+      {/* TASK LIST */}
       {filteredTasks.length === 0 ? (
         <div className="bg-white rounded-lg shadow-md p-12 text-center">
           <p className="text-xl text-gray-500">
@@ -157,14 +153,14 @@ export function Tasks() {
               key={task.id}
               task={task}
               onToggleComplete={toggleComplete}
-              onEdit={handleEditTask}
+              onEdit={setEditingTask}
               onDelete={handleDeleteTask}
             />
           ))}
         </div>
       )}
 
-      {/* Forms */}
+      {/* FORMS */}
       {showForm && (
         <TaskForm
           onSubmit={handleAddTask}
@@ -187,5 +183,6 @@ export function Tasks() {
       )}
     </div>
   );
-}
+};
+
 export default Tasks;
