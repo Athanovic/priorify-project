@@ -1,63 +1,97 @@
-import { CheckCircle2, Circle, Trash2, Edit2 } from "lucide-react";
+import React from "react";
+import {
+  CheckCircle2,
+  Circle,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 
-function TaskCard({ task, onToggleComplete, onEdit, onDelete }) {
+const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }) => {
+  const priorityBadgeClass = (priority) => {
+    if (priority === "high") {
+      return "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300";
+    }
+    if (priority === "medium") {
+      return "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300";
+    }
+    // LOW priority -> use gray (changed from green)
+    return "bg-gray-100 dark:bg-gray-900/30 text-gray-700 dark:text-gray-300";
+  };
+
   return (
     <div
-      className={`bg-white rounded-lg shadow-md p-4 flex justify-between items-center transition hover:shadow-lg ${
-        task.completed ? "opacity-70" : ""
-      }`}
+      className="flex items-center justify-between p-4 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-600 hover:bg-indigo-50/30 dark:hover:bg-indigo-900/10 transition-all group"
+      aria-label={`task-${task.id}`}
     >
-      {/* Task Info */}
-      <div className="flex items-center gap-4">
-        {/* Completion Icon */}
-        <button onClick={() => onToggleComplete(task.id)} className="focus:outline-none">
+      <div className="flex items-center gap-4 flex-1">
+        <button
+          onClick={() => onToggleComplete && onToggleComplete(task.id)}
+          aria-label={task.completed ? "Mark as incomplete" : "Mark as complete"}
+          className="flex-shrink-0"
+        >
           {task.completed ? (
-            <CheckCircle2 className="w-6 h-6 text-green-600" />
+            <CheckCircle2 className="w-6 h-6 text-green-500 dark:text-green-400" />
           ) : (
-            <Circle className="w-6 h-6 text-gray-400" />
+            <Circle className="w-6 h-6 text-gray-300 dark:text-gray-600" />
           )}
         </button>
 
-        <div>
-          <h3 className={`text-lg font-medium ${task.completed ? "line-through text-gray-500" : "text-gray-900"}`}>
+        <div className="flex-1 min-w-0">
+          <p
+            className={`font-medium truncate ${
+              task.completed
+                ? "line-through text-gray-500 dark:text-gray-400"
+                : "text-gray-900 dark:text-gray-50"
+            }`}
+          >
             {task.title}
-          </h3>
-          {task.priority && (
-            <span
-              className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                task.priority.toLowerCase() === "high"
-                  ? "bg-red-100 text-red-600"
-                  : task.priority.toLowerCase() === "medium"
-                  ? "bg-yellow-100 text-yellow-600"
-                  : "bg-green-100 text-green-600"
-              }`}
-            >
-              {task.priority}
-            </span>
+          </p>
+
+          {task.description && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 truncate">
+              {task.description}
+            </p>
           )}
+
+          <div className="mt-2 flex items-center gap-2">
+            {task.priority && (
+              <span
+                className={`text-xs font-bold px-3 py-1.5 rounded-full ${priorityBadgeClass(
+                  task.priority
+                )}`}
+              >
+                {task.priority.toUpperCase()}
+              </span>
+            )}
+
+            {task.dueDate && (
+              <span className="text-xs bg-gray-100 dark:bg-gray-900/20 text-gray-600 dark:text-gray-300 px-2 py-1 rounded-md">
+                {new Date(task.dueDate).toLocaleDateString()}
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Actions */}
-      <div className="flex gap-2">
+      <div className="flex items-center gap-3 ml-4">
         <button
-          onClick={() => onEdit(task)}
-          className="p-2 rounded-md hover:bg-gray-100 transition"
-          title="Edit Task"
+          onClick={() => onEdit && onEdit(task)}
+          className="w-10 h-10 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center shadow-sm hover:shadow-md transition"
+          aria-label="Edit task"
         >
-          <Edit2 className="w-5 h-5 text-blue-600" />
+          <Pencil className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
         </button>
 
         <button
-          onClick={() => onDelete(task.id)}
-          className="p-2 rounded-md hover:bg-gray-100 transition"
-          title="Delete Task"
+          onClick={() => onDelete && onDelete(task.id)}
+          className="w-10 h-10 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center shadow-sm hover:shadow-md transition"
+          aria-label="Delete task"
         >
-          <Trash2 className="w-5 h-5 text-red-600" />
+          <Trash2 className="w-4 h-4 text-red-500 dark:text-red-400" />
         </button>
       </div>
     </div>
   );
-}
+};
 
 export default TaskCard;
