@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
@@ -7,6 +8,16 @@ import Settings from "./pages/Settings";
 import Layout from "./components/Layout";
 
 function App() {
+  // Apply theme on initial load
+  useEffect(() => {
+    const theme = localStorage.getItem("theme") || "light";
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
   return (
     <Routes>
       <Route element={<Layout />}>
